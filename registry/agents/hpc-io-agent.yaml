@@ -1,0 +1,65 @@
+# The I/O Agent of the HPC Execution UI — a Darshan I/O analyst over a corpus of
+# filled two-layer Darshan schemas (DLIO / IOR runs profiled on Crux).
+# Status is `pending` while its public TLS host + token are finalized (then it flips to `active`).
+
+schema: trinity.hub.agent/v1
+
+id: hpc-io-agent
+name: HPC I/O Agent
+owner: "Baixi Sun — Argonne National Laboratory (ALCF)"
+
+maintainers:
+  - github: Presciman
+    contact: sunbaixi@163.com
+
+type: external
+protocol: a2a
+
+discovery:
+  card_url: https://<HOST>/.well-known/agent-card.json   # final HTTPS host delivered out of band
+
+auth:
+  scheme: bearer            # dedicated, revocable token exchanged out of band — never in this repo
+
+domains:
+  - hpc-io
+  - darshan
+  - io-performance
+  - mpi-io
+  - lustre
+
+description: >-
+  HPC I/O performance analyst for Darshan profiling logs. From a job's counters — the raw
+  darshan-parser --total dump or a filled two-layer Darshan schema — it reports workload
+  shape, I/O volume, dominant interface, access pattern, time breakdown and load balance,
+  names the dominant anti-pattern, and ranks concrete fixes. Every quantitative claim cites
+  the counter it rests on, and a counter missing from the evidence is reported as missing
+  rather than guessed.
+
+skills:
+  - id: darshan-log-analysis
+    description: >-
+      Fixed nine-section characterisation of a Darshan log — workload shape, I/O volume,
+      dominant interface, access pattern, time breakdown, load balance, bottleneck, ranked
+      fixes, what to measure next.
+  - id: io-bottleneck-diagnosis
+    description: >-
+      Weigh every candidate anti-pattern — small or unaligned accesses, metadata and open
+      storms, missing MPI-IO or collective I/O, rank imbalance, random access, STDIO leakage,
+      Lustre striping — and name the one that dominates.
+  - id: io-fix-recommendations
+    description: >-
+      Remediation steps ordered by payoff, each tied to the counter that motivates it, plus
+      the measurement that would confirm or refute the diagnosis.
+  - id: darshan-schema-grounding
+    description: >-
+      Answer from the filled two-layer Darshan schema — layer 1 directly-measured counter
+      families reduced by libdarshan-util's accumulator, layer 2 relations derived from them —
+      so measured and derived facts stay distinguishable in the answer.
+
+homepage: https://www.sunbaixi.com
+icon: "💾"
+color: "#f59e0b"
+
+status: pending
+added: "2026-10"
